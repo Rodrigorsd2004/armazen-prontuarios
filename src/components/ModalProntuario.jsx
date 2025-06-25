@@ -4,6 +4,8 @@ import { saveAs } from "file-saver";
 import "./Styles/ModalProntuario.css";
 import { verificarSenha } from "../utils/verificaSenha";
 import ConfirmModal from "./ConfirmModal";
+import { gerarExcelComDados } from "../utils/exportarExcel";
+
 
 const modeloExcel = "/modelo-prontuario.xlsx";
 
@@ -398,9 +400,8 @@ export default function ModalProntuario({ aluno, onFechar, onAtualizarAluno }) {
         </div>
 
         <div className="excel-botoes">
-          <button onClick={gerarExcelComDados} title="Baixar">
-            📥
-          </button>
+          <button onClick={() => gerarExcelComDados(formData)} title="Baixar">📥</button>
+
           <button onClick={() => window.print()} title="Imprimir">
             🖨️
           </button>
