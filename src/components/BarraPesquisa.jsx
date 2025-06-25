@@ -1,6 +1,6 @@
 // src/components/BarraPesquisa.jsx
 import React from "react";
-import "./styles/BarraPesquisa.css";
+import "./Styles/BarraPesquisa.css";
 
 export default function BarraPesquisa({ valor, onChange }) {
   return (

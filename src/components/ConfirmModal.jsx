@@ -1,5 +1,5 @@
 import React from "react";
-import "./styles/ConfirmModal.css";
+import "./Styles/ConfirmModal.css";
 import { verificarSenha } from "../utils/verificaSenha";
 
 export default function ConfirmModal({ isOpen, onClose, onConfirm }) {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
-import "./styles/ModalProntuario.css";
+import "./Styles/ModalProntuario.css";
 import { verificarSenha } from "../utils/verificaSenha";
 import ConfirmModal from "./ConfirmModal";
 
