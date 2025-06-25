@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import ExcelJS from "exceljs";
+import * as XLSX from "xlsx";
+
 import { saveAs } from "file-saver";
 import "./styles/ModalProntuario.css";
 import { verificarSenha } from "../utils/verificaSenha";
@@ -24,58 +25,45 @@ export default function ModalProntuario({ aluno, onFechar, onAtualizarAluno }) {
     return `${dia}/${mes}/${ano}`;
   };
 
-  const gerarExcelComDados = async () => {
-    const response = await fetch(modeloExcel);
-    const buffer = await response.arrayBuffer();
-    const workbook = new ExcelJS.Workbook();
-    await workbook.xlsx.load(buffer);
-    const sheet = workbook.getWorksheet(1);
+  const gerarExcelComDados = () => {
+  const dados = [
+    {
+      Escola: formData.escola,
+      CIE: formData.codigoCIE,
+      RA: formData.ra,
+      CPF: formData.cpf,
+      RG: formData.rg,
+      RM: formData.rm,
+      Sexo: formData.sexo,
+      Exp: formData.orgaoExpedidor,
+      Nome: formData.nome,
+      NIS: formData.nis,
+      BolsaFamilia: formData.bolsaFamilia,
+      CorRaca: formData.corRaca,
+      NecessidadesEspeciais: formData.necessidadesEspeciais,
+      Municipio: formData.municipio,
+      Nacionalidade: formData.nacionalidade,
+      UF: formData.ufNascimento,
+      DataNascimento: formatarData(formData.dataNascimento),
+      NomePai: formData.nomePai,
+      NomeMae: formData.nomeMae,
+      Endereco: `${formData.enderecoRua}, ${formData.enderecoNumero} - ${formData.enderecoBairro}, ${formData.enderecoCidade}/${formData.enderecoUF} - CEP ${formData.enderecoCEP}`,
+      Telefone1: formData.telefone1,
+      Telefone2: formData.telefone2,
+    },
+  ];
 
-    const set = (celula, valor) => (sheet.getCell(celula).value = valor);
+  const ws = XLSX.utils.json_to_sheet(dados);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Prontuario");
 
-    set("B11", formData.escola);
-    set("J11", formData.codigoCIE);
-    set("B13", formData.ra);
-    set("F13", formData.cpf);
-    set("J13", formData.rg);
-    set("B15", formData.rm);
-    set("F15", formData.sexo);
-    set("J15", formData.orgaoExpedidor);
-    set("C17", formData.nome);
-    set("B20", formData.nis);
-    set("F21", formData.bolsaFamilia === "sim" ? "X" : "");
-    set("F22", formData.bolsaFamilia === "não" ? "X" : "");
-    set("I20", formData.corRaca);
-    set("E24", formData.necessidadesEspeciais === "sim" ? "X" : "");
-    set("F24", formData.necessidadesEspeciais === "não" ? "X" : "");
-    set("C28", formData.municipio);
-    set("C29", formData.nacionalidade);
-    set("H29", formData.ufNascimento);
+  const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+  const blob = new Blob([excelBuffer], {
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  });
+  saveAs(blob, `prontuario_${formData.nome}.xlsx`);
+};
 
-    if (formData.dataNascimento) {
-      const data = new Date(formData.dataNascimento);
-      set("J29", data.getDate().toString().padStart(2, "0"));
-      set("K29", (data.getMonth() + 1).toString().padStart(2, "0"));
-      set("L29", data.getFullYear().toString());
-    }
-
-    set("C31", formData.nomePai);
-    set("C34", formData.nomeMae);
-    set("O18", formData.enderecoRua);
-    set("U18", formData.enderecoNumero);
-    set("O20", formData.enderecoBairro);
-    set("O21", formData.enderecoCidade);
-    set("V20", formData.enderecoUF);
-    set("V21", formData.enderecoCEP);
-    set("Q25", formData.telefone1);
-    set("Q26", formData.telefone2);
-
-    const newBuffer = await workbook.xlsx.writeBuffer();
-    const blob = new Blob([newBuffer], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    });
-    saveAs(blob, `prontuario_${formData.nome}.xlsx`);
-  };
 
   const salvarEdicao = async () => {
     try {
