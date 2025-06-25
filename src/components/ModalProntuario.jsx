@@ -67,7 +67,7 @@ export default function ModalProntuario({ aluno, onFechar, onAtualizarAluno }) {
   const salvarEdicao = async () => {
     try {
       const response = await fetch(
-  `https://armazen-prontuarios-production.up.railway.app/alunos/${formData.id}`,
+  `https://armazen-prontuario-api-production.up.railway.app/alunos/${formData.id}`,
   {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -105,7 +105,7 @@ export default function ModalProntuario({ aluno, onFechar, onAtualizarAluno }) {
 
     try {
       const response = await fetch(
-  `https://armazen-prontuarios-production.up.railway.app/alunos/${aluno.id}`,
+  `https://armazen-prontuario-api-production.up.railway.app/alunos/${aluno.id}`,
   {
     method: "DELETE",
   }
