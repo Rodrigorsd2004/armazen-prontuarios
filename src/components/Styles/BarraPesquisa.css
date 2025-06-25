@@ -1,0 +1,22 @@
+
+.barra-pesquisa-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+  margin-bottom: -1rem;
+}
+
+.barra-pesquisa-container input {
+  width: 60%;
+  padding: 12px 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: 0.3s;
+}
+
+.barra-pesquisa-container input:focus {
+  border-color: #0f4c75;
+  box-shadow: 0 0 5px rgba(15, 76, 117, 0.3);
+}

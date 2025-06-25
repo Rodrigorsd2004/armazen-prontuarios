@@ -1,0 +1,248 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(3px);
+}
+
+.modal-excel-layout {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 2rem 3rem 5rem;
+  width: 95%;
+  max-width: 1000px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+  position: relative;
+  font-family: 'Segoe UI', sans-serif;
+  color: #f1f1f1;
+  animation: slideIn 0.3s ease;
+  scrollbar-width: none; /* Firefox */
+}
+
+.modal-excel-layout::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+@keyframes slideIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.fechar-modal {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 999;
+  border: none;
+  background: #e63946;
+  color: white;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.fechar-modal:hover {
+  background: #d62839;
+}
+
+.excel-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #fff;
+}
+
+.excel-header h3 {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+}
+
+.excel-header p {
+  font-size: 0.95rem;
+  margin: 0;
+  opacity: 0.85;
+}
+
+.excel-bloco {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.excel-bloco div,
+.excel-linha {
+  flex: 1 1 40%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 0;
+  font-size: 0.95rem;
+  color: #fff;
+}
+
+.excel-linha {
+  flex: 1 1 100%;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.modal-excel-layout input[type="text"],
+.modal-excel-layout input[type="date"],
+.modal-excel-layout input {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.95rem;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.modal-excel-layout input:focus {
+  border-color: #0f4c75;
+  box-shadow: 0 0 0 2px rgba(15, 76, 117, 0.3);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Botões fixos no rodapé */
+.excel-botoes {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.2rem 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  z-index: 20;
+  margin-top: 3rem;
+  background: transparent;
+  backdrop-filter: none;
+  border-radius: 0;
+}
+
+.excel-botoes button {
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.excel-botoes button:hover {
+  background: rgba(255, 255, 255, 0.16);
+  transform: translateY(-2px);
+}
+
+@page {
+  margin: 20mm;
+}
+
+@media print {
+  body {
+    margin: 0;
+  }
+
+  footer,
+  header {
+    display: none !important;
+  }
+
+  body::after {
+    display: none !important;
+  }
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .modal-excel-layout,
+  .modal-excel-layout * {
+    visibility: visible;
+  }
+
+  .modal-excel-layout {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: white !important;
+    color: #000 !important;
+    padding: 2rem !important;
+    font-family: "Arial", sans-serif !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  .fechar-modal,
+  .excel-botoes,
+  .footer-buttons,
+  button,
+  input,
+  select {
+    display: none !important;
+  }
+
+  .excel-bloco,
+  .excel-linha {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.4rem;
+  }
+
+  .excel-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .excel-header h3 {
+    font-size: 18px !important;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+  }
+
+  .excel-header p {
+    font-size: 12px !important;
+    margin: 0;
+  }
+}
+
+.excel-bloco, .excel-linha {
+  page-break-inside: avoid;
+}

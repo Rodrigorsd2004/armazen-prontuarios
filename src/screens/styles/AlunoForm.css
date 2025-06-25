@@ -1,0 +1,108 @@
+:root {
+  --color-primary: #0f4c75;
+  --color-primary-light: #144d6d;
+  --color-error: #e63946;
+  --color-success: #2a9d8f;
+  --color-text: #1b262c;
+  --color-placeholder: #7a7a7a;
+  --color-bg: #f8f9fa;
+  --border-radius: 8px;
+  --transition-speed: 0.3s;
+  --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --input-padding: 0.9rem 1rem;
+  --input-font-size: 1rem;
+}
+
+.aluno-form-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 140px; /* espaçamento maior para separar o Header */
+  background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') center center / cover no-repeat fixed;
+}
+
+.aluno-form {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
+  padding: 3rem 3.5rem;
+  border-radius: 20px;
+  max-width: 1200px;
+  width: 90%;
+  color: #1b262c;
+}
+
+.aluno-form h2 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #0f4c75;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  font-size: 1rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus {
+  border-color: #0f4c75;
+  box-shadow: 0 0 6px rgba(15, 76, 117, 0.4);
+  outline: none;
+}
+
+.btn-submit {
+  background-color: #0f4c75;
+  color: white;
+  padding: 1rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  width: 100%;
+}
+
+.btn-submit:hover {
+  background-color: #144d6d;
+  box-shadow: 0 8px 20px rgba(15, 76, 117, 0.4);
+}
+
+@media (max-width: 1000px) {
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
