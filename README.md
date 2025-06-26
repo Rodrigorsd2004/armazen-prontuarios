@@ -8,12 +8,12 @@ Este projeto é uma aplicação fullstack que permite o cadastro, visualização
 - Node.js
 - Express.js
 - Prisma ORM
-- SQLite (versão local) / MySQL via PlanetScale (versão online)
+- SQLite (versão local) / MySQL via Railway (versão online)
 
 ### Frontend
 - React.js
 - Vite
-- TailwindCSS
+- CSS
 - Lucide React (ícones)
 - Framer Motion (animações)
 
