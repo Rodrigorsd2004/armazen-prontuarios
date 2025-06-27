@@ -73,7 +73,7 @@ export default function AlunoForm({
     if(!formData.ra){
       alert("O campo R.A. é obrigatório.");
       return;
-    }
+    } 
 
     if(!formData.nome){
       alert("O campo Nome é obrigatório.");

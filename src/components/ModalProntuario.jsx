@@ -1,11 +1,6 @@
 import React, { useState } from "react";
-import * as XLSX from "xlsx";
-import { saveAs } from "file-saver";
-import "./Styles/ModalProntuario.css";
 import { verificarSenha } from "../utils/verificaSenha";
 import ConfirmModal from "./ConfirmModal";
-import { gerarExcelComDados } from "../utils/exportarExcel";
-
 
 const modeloExcel = "/modelo-prontuario.xlsx";
 
@@ -26,56 +21,73 @@ export default function ModalProntuario({ aluno, onFechar, onAtualizarAluno }) {
     return `${dia}/${mes}/${ano}`;
   };
 
-  const gerarExcelComDados = () => {
-  const dados = [
-    {
-      Escola: formData.escola,
-      CIE: formData.codigoCIE,
-      RA: formData.ra,
-      CPF: formData.cpf,
-      RG: formData.rg,
-      RM: formData.rm,
-      Sexo: formData.sexo,
-      Exp: formData.orgaoExpedidor,
-      Nome: formData.nome,
-      NIS: formData.nis,
-      BolsaFamilia: formData.bolsaFamilia,
-      CorRaca: formData.corRaca,
-      NecessidadesEspeciais: formData.necessidadesEspeciais,
-      Municipio: formData.municipio,
-      Nacionalidade: formData.nacionalidade,
-      UF: formData.ufNascimento,
-      DataNascimento: formatarData(formData.dataNascimento),
-      NomePai: formData.nomePai,
-      NomeMae: formData.nomeMae,
-      Endereco: `${formData.enderecoRua}, ${formData.enderecoNumero} - ${formData.enderecoBairro}, ${formData.enderecoCidade}/${formData.enderecoUF} - CEP ${formData.enderecoCEP}`,
-      Telefone1: formData.telefone1,
-      Telefone2: formData.telefone2,
-    },
-  ];
+  const gerarExcelComDados = async () => {
+    const dados = {
+      escola: formData.escola,
+      codigoCIE: formData.codigoCIE,
+      ra: formData.ra,
+      cpf: formData.cpf,
+      rg: formData.rg,
+      rm: formData.rm,
+      sexo: formData.sexo,
+      orgaoExpedidor: formData.orgaoExpedidor,
+      nome: formData.nome,
+      nis: formData.nis,
+      bolsaFamilia: formData.bolsaFamilia,
+      corRaca: formData.corRaca,
+      necessidadesEspeciais: formData.necessidadesEspeciais,
+      municipio: formData.municipio,
+      nacionalidade: formData.nacionalidade,
+      ufNascimento: formData.ufNascimento,
+      dataNascimento: formData.dataNascimento,
+      nomePai: formData.nomePai,
+      nomeMae: formData.nomeMae,
+      enderecoRua: formData.enderecoRua,
+      enderecoNumero: formData.enderecoNumero,
+      enderecoBairro: formData.enderecoBairro,
+      enderecoCidade: formData.enderecoCidade,
+      enderecoUF: formData.enderecoUF,
+      enderecoCEP: formData.enderecoCEP,
+      telefone1: formData.telefone1,
+      telefone2: formData.telefone2,
+    };
 
-  const ws = XLSX.utils.json_to_sheet(dados);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "Prontuario");
+    try {
+      // Envia os dados para o backend gerar o Excel
+      const response = await fetch('https://armazen-prontuario-api-production.up.railway.app/gerar-excel', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dados),
+      });
 
-  const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-  const blob = new Blob([excelBuffer], {
-    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-  });
-  saveAs(blob, `prontuario_${formData.nome}.xlsx`);
-};
+      if (!response.ok) {
+        throw new Error('Erro ao gerar o Excel');
+      }
 
+      // Recebe o arquivo Excel gerado
+      const blob = await response.blob();
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `prontuario_${formData.nome}.xlsx`;
+      link.click();
+    } catch (error) {
+      console.error("Erro ao gerar o Excel:", error);
+      alert("Erro ao gerar o Excel.");
+    }
+  };
 
   const salvarEdicao = async () => {
     try {
       const response = await fetch(
-  `https://armazen-prontuario-api-production.up.railway.app/alunos/${formData.id}`,
-  {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(formData),
-  }
-);
+        `https://armazen-prontuario-api-production.up.railway.app/alunos/${formData.id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (response.ok) {
         alert("Alterações salvas com sucesso.");
@@ -107,11 +119,11 @@ export default function ModalProntuario({ aluno, onFechar, onAtualizarAluno }) {
 
     try {
       const response = await fetch(
-  `https://armazen-prontuario-api-production.up.railway.app/alunos/${aluno.id}`,
-  {
-    method: "DELETE",
-  }
-);
+        `https://armazen-prontuario-api-production.up.railway.app/alunos/${aluno.id}`,
+        {
+          method: "DELETE",
+        }
+      );
       if (response.ok) {
         alert("Aluno excluído com sucesso.");
         onFechar(); 
@@ -124,6 +136,7 @@ export default function ModalProntuario({ aluno, onFechar, onAtualizarAluno }) {
       alert("Erro inesperado ao excluir o aluno.");
     }
   };
+
 
   return (
     <div className="modal-overlay">
@@ -400,7 +413,7 @@ export default function ModalProntuario({ aluno, onFechar, onAtualizarAluno }) {
         </div>
 
         <div className="excel-botoes">
-          <button onClick={() => gerarExcelComDados(formData)} title="Baixar">📥</button>
+          <button onClick={() => gerarExcelComDados()} title="Baixar">📥</button>
 
           <button onClick={() => window.print()} title="Imprimir">
             🖨️
