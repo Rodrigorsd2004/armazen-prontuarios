@@ -126,7 +126,7 @@ export default function ModalProntuario({ aluno, onFechar, onAtualizarAluno }) {
   };
 
   return (
-    <div className="modal-overlay" onClick={onFechar}>
+    <div className="modal-overlay">
       <div className="modal-excel-layout" onClick={(e) => e.stopPropagation()}>
         <button className="fechar-modal" onClick={onFechar}>
           ×
