@@ -70,6 +70,21 @@ export default function AlunoForm({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if(!formData.ra){
+      alert("O campo R.A. é obrigatório.");
+      return;
+    }
+
+    if(!formData.nome){
+      alert("O campo Nome é obrigatório.");
+      return;
+    }
+
+    if(!formData.dataNascimento){
+      alert("O campo Data de Nascimento é obrigatório.");
+      return;
+    }
+
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/alunos`, {
         method: "POST",
