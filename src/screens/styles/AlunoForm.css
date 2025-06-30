@@ -20,7 +20,7 @@
   flex-direction: column;
   align-items: center;
   padding-top: 140px; /* espaçamento maior para separar o Header */
-  background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') center center / cover no-repeat fixed;
+  background: url('https://images.unsplash.com/photo-1750099255888-91d5386e833c?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center center / cover no-repeat fixed;
 }
 
 .aluno-form {
