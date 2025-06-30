@@ -18,7 +18,7 @@ export default function Login({ onLoginSuccess }) {
       setErro('');
       onLoginSuccess();
     } else {
-      setErro('Prontuário ou senha incorretos');
+      setErro('Login ou senha incorreta');
     }
   };
 
