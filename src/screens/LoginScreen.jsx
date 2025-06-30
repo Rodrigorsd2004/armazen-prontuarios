@@ -2,37 +2,23 @@ import React, { useState } from 'react';
 import { FaUser, FaLock } from 'react-icons/fa';
 import './styles/LoginScreen.css';
 import inicial from '../assets/inicial.png';
+import  validarConta from '../utils/validarConta.js';
 
 export default function Login({ onLoginSuccess }) {
   const [prontuario, setProntuario] = useState('');
   const [senha, setSenha] = useState('');
   const [erro, setErro] = useState('');
 
-  const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const response = await fetch("https://armazen-prontuarios-production.up.railway.app", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ prontuario, senha }),
-    });
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    const data = await response.json();
-
-    if (response.ok) {
+    if (validarConta(prontuario, senha)) {
       setErro('');
-      onLoginSuccess(); // Redireciona ou acessa a Home
+      onLoginSuccess();
     } else {
-      setErro(data.erro || 'Login ou senha incorretos');
+      setErro('login ou senha incorreta');
     }
-  } catch (err) {
-    console.error("Erro ao conectar:", err);
-    setErro("Erro ao conectar com o servidor");
-  }
-};
-
+  };
 
   return (
     <div className="login-wrapper">
