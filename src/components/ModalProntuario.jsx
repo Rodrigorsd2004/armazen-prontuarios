@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { verificarSenha } from "../utils/verificaSenha";
 import ConfirmModal from "./ConfirmModal";
-import "./styles/ModalProntuario.css";
+import "./Styles/ModalProntuario.css";
 
 const modeloExcel = "/modelo-prontuario.xlsx";
 
