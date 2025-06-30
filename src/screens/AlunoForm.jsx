@@ -64,23 +64,23 @@ export default function AlunoForm({
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value.toUpperCase() }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if(!formData.ra){
+    if (!formData.ra) {
       alert("O campo R.A. é obrigatório.");
       return;
-    } 
+    }
 
-    if(!formData.nome){
+    if (!formData.nome) {
       alert("O campo Nome é obrigatório.");
       return;
     }
 
-    if(!formData.dataNascimento){
+    if (!formData.dataNascimento) {
       alert("O campo Data de Nascimento é obrigatório.");
       return;
     }
@@ -148,11 +148,13 @@ export default function AlunoForm({
             let mask = null;
 
             if (key === "ra") mask = "000000000-*";
-            if (key === "cpf") mask = "000000000-00";
-            if (key === "rg") mask = "00000000-**";
+            if (key === "cpf") mask = "000.000.000-00";
+            if (key === "rg") mask = "00.000.000-*";
+            if (key === "nis") mask = "00000000000";
             if (key === "enderecoCEP") mask = "00000-000";
-            if (key === "telefone1" || key === "telefone2")
-              mask = "(00) 00000-0000";
+            if (key === "telefone1" || key === "telefone2") mask = "(00) 00000-0000";
+            if (key === "dataNascimento") mask = "00/00/0000";
+            if (key === "enderecoNumero") mask = "00000";
 
             return (
               <div className="form-group" key={key}>
@@ -165,7 +167,7 @@ export default function AlunoForm({
                     id={key}
                     value={value}
                     onAccept={(val) =>
-                      setFormData((prev) => ({ ...prev, [key]: val }))
+                      setFormData((prev) => ({ ...prev, [key]: val.toUpperCase() }))
                     }
                   />
                 ) : (
@@ -181,6 +183,7 @@ export default function AlunoForm({
             );
           })}
         </div>
+
         <button type="submit" className="btn-submit">
           Cadastrar
         </button>
