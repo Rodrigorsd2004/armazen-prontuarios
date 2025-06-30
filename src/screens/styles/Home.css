@@ -21,26 +21,41 @@
 }
 
 body,
-html,
-#root {
+html {
   margin: 0;
   padding: 0;
   height: 100%;
   font-family: var(--font-family-base);
-  background: url('https://images.unsplash.com/photo-1750099255888-91d5386e833c?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')
-    center center / cover no-repeat fixed;
   color: var(--color-text-dark);
   overflow-x: hidden;
+  /* Não usar position fixed aqui! */
+}
+
+.background-mousemove {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 110vh; /* ligeiramente maior para efeito de movimento */
+  background-image: url('https://images.unsplash.com/photo-1750099255888-91d5386e833c?q=80&w=870&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  pointer-events: none; /* fundo não intercepta cliques */
+  will-change: transform;
+  transition: transform 0.1s ease-out;
+  z-index: -1; /* fica atrás do conteúdo */
 }
 
 .home-container {
+  position: relative; /* para ficar acima do fundo fixo */
+  z-index: 1;
   height: 100vh;
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 2rem;
-  padding-top: 90px; /* Espaço para header */
+  padding-top: 90px; /* espaço para header */
 }
 
 .home-card {

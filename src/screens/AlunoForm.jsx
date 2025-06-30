@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Header from "../components/Header";
+import BackgroundParallax from "../components/BackgroundParallax"; // import do componente parallax
 import "./styles/AlunoForm.css";
 import { IMaskInput } from "react-imask";
 
@@ -135,59 +136,62 @@ export default function AlunoForm({
   };
 
   return (
-    <div className="aluno-form-container">
-      <Header
-        onNavigateHome={onVoltar}
-        onNavigateAdicionar={onNavigateAdicionar}
-        onNavigateListar={onNavigateListar}
-      />
-      <form className="aluno-form" onSubmit={handleSubmit}>
-        <h2>Cadastro Completo do Aluno</h2>
-        <div className="form-grid">
-          {Object.entries(formData).map(([key, value]) => {
-            let mask = null;
+    <>
+      <BackgroundParallax imageUrl="https://images.unsplash.com/photo-1750099255888-91d5386e833c?q=80&w=870&auto=format&fit=crop" />
+      <div className="aluno-form-container" style={{ position: "relative", zIndex: 1 }}>
+        <Header
+          onNavigateHome={onVoltar}
+          onNavigateAdicionar={onNavigateAdicionar}
+          onNavigateListar={onNavigateListar}
+        />
+        <form className="aluno-form" onSubmit={handleSubmit}>
+          <h2>Cadastro Completo do Aluno</h2>
+          <div className="form-grid">
+            {Object.entries(formData).map(([key, value]) => {
+              let mask = null;
 
-            if (key === "ra") mask = "000000000-*";
-            if (key === "cpf") mask = "000.000.000-00";
-            if (key === "rg") mask = "00.000.000-*";
-            if (key === "nis") mask = "00000000000";
-            if (key === "enderecoCEP") mask = "00000-000";
-            if (key === "telefone1" || key === "telefone2") mask = "(00) 00000-0000";
-            if (key === "dataNascimento") mask = "00/00/0000";
-            if (key === "enderecoNumero") mask = "00000";
+              if (key === "ra") mask = "000000000-*";
+              if (key === "cpf") mask = "000.000.000-00";
+              if (key === "rg") mask = "00.000.000-*";
+              if (key === "nis") mask = "00000000000";
+              if (key === "enderecoCEP") mask = "00000-000";
+              if (key === "telefone1" || key === "telefone2") mask = "(00) 00000-0000";
+              if (key === "dataNascimento") mask = "00/00/0000";
+              if (key === "enderecoNumero") mask = "00000";
 
-            return (
-              <div className="form-group" key={key}>
-                <label htmlFor={key}>{labels[key] || key}</label>
+              return (
+                <div className="form-group" key={key}>
+                  <label htmlFor={key}>{labels[key] || key}</label>
 
-                {mask ? (
-                  <IMaskInput
-                    mask={mask}
-                    name={key}
-                    id={key}
-                    value={value}
-                    onAccept={(val) =>
-                      setFormData((prev) => ({ ...prev, [key]: val.toUpperCase() }))
-                    }
-                  />
-                ) : (
-                  <input
-                    type={key.includes("data") ? "date" : "text"}
-                    name={key}
-                    id={key}
-                    value={value}
-                    onChange={handleChange}
-                  />
-                )}
-              </div>
-            );
-          })}
-        </div>
+                  {mask ? (
+                    <IMaskInput
+                      mask={mask}
+                      name={key}
+                      id={key}
+                      value={value}
+                      onAccept={(val) =>
+                        setFormData((prev) => ({ ...prev, [key]: val.toUpperCase() }))
+                      }
+                    />
+                  ) : (
+                    <input
+                      type={key.includes("data") ? "date" : "text"}
+                      name={key}
+                      id={key}
+                      value={value}
+                      onChange={handleChange}
+                    />
+                  )}
+                </div>
+              );
+            })}
+          </div>
 
-        <button type="submit" className="btn-submit">
-          Cadastrar
-        </button>
-      </form>
-    </div>
+          <button type="submit" className="btn-submit">
+            Cadastrar
+          </button>
+        </form>
+      </div>
+    </>
   );
 }
